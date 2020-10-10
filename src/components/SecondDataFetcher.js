@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FETCH_DATA_FAILURE, FETCH_DATA_SUCCESS } from "../redux/actions";
 import { fetchData } from "../redux/thunks/fetchData";
-import { useFetchState } from "../redux-signal/hooks";
+import { useFetchState } from "../redux-signal";
 
 const dataSelector = (store) => store.data.data;
 
@@ -12,8 +12,8 @@ export const SecondDataFetcher = () => {
   const data = useSelector(dataSelector) || fetchMessage;
   const [isFetching, fetchError] = useFetchState({
     fetch: fetchData,
-    done: FETCH_DATA_SUCCESS,
-    error: FETCH_DATA_FAILURE,
+    success: FETCH_DATA_SUCCESS,
+    failure: FETCH_DATA_FAILURE,
   });
 
   return (
@@ -22,9 +22,9 @@ export const SecondDataFetcher = () => {
         {`
         const data = useSelector(dataSelector) || fetchMessage;
         const [isFetching, fetchError] = useFetchState({
-          pending: fetchData,
-          done: FETCH_DATA_SUCCESS,
-          error: FETCH_DATA_FAILURE,
+          fetch: fetchData,
+          success: FETCH_DATA_SUCCESS,
+          failure: FETCH_DATA_FAILURE,
         });
         {(isFetching && "fetching...") || fetchError?.error || data}
       `}

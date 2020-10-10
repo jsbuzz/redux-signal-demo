@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE } from "./actions";
+import { FETCH_DATA_SUCCESS } from "./actions";
 
 const dataReducerState = {
   data: null,
