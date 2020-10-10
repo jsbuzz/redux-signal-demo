@@ -21,7 +21,7 @@ export const SecondDataFetcher = () => {
       <pre>
         {`
         const data = useSelector(dataSelector) || fetchMessage;
-        const [isFetching, fetchError] = usePendingState({
+        const [isFetching, fetchError] = useFetchState({
           pending: fetchData,
           done: FETCH_DATA_SUCCESS,
           error: FETCH_DATA_FAILURE,
