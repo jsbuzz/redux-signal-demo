@@ -5,6 +5,7 @@ Simple middleware for redux that allows components to listen on actions and reac
 ```
 ...
 import { fetchData } from "../redux/thunks/fetchData";
+import { FETCH_DATA_FAILURE, FETCH_DATA_SUCCESS } from "../redux/actions";
 
 ...
 const data = useSelector(dataSelector) || fetchMessage;
