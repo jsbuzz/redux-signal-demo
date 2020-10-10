@@ -4,8 +4,11 @@ import reducers from "./reducers";
 
 window.actionListeners = {};
 
+const asKey = (str) => (typeof str === "function" ? str.toString() : str);
+
 const actionListener = () => (next) => (action) => {
-  const listeners = window.actionListeners[action.type];
+  const key = typeof action === "function" ? asKey(action) : action.type;
+  const listeners = window.actionListeners[key];
   if (listeners) {
     listeners.forEach((listener) => listener(action));
   }

@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  FETCH_DATA_START,
-  FETCH_DATA_FAILURE,
-  FETCH_DATA_SUCCESS,
-} from "../redux/actions";
+import { FETCH_DATA_FAILURE, FETCH_DATA_SUCCESS } from "../redux/actions";
 import { fetchData } from "../redux/thunks/fetchData";
 import { useListeners } from "../redux-signal/hooks";
 
@@ -16,7 +12,7 @@ export const DataFetcher = () => {
   const [isLoading, setLoading] = useState(false);
 
   useListeners(
-    FETCH_DATA_START,
+    fetchData,
     () => setLoading(true),
 
     FETCH_DATA_SUCCESS,
@@ -25,12 +21,12 @@ export const DataFetcher = () => {
   );
 
   return (
-    <>
+    <div className="data-fetcher">
       {(isLoading && "loading...") || <div>{data}</div>}
       <div>&nbsp;</div>
       <button disabled={isLoading} onClick={() => dispatch(fetchData())}>
         Fetch
       </button>
-    </>
+    </div>
   );
 };

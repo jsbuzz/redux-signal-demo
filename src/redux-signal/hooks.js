@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react";
 
+const thunkRX = /.*=>.*dispatch.*=>/i;
+
+const isThunk = (fn) => !!fn.toString().match(thunkRX);
+const asKey = (str) => (typeof str === "function" ? str().toString() : str);
+
 export function useListeners(...listeners) {
   useEffect(() => {
     listeners.reduce((a, c) => {
-      if (typeof c === "function") {
+      if (typeof c === "function" && !isThunk(c)) {
         a.forEach((e) => {
-          const eventListeners = window.actionListeners[e];
+          const key = asKey(e);
+          const eventListeners = window.actionListeners[key];
           if (eventListeners) {
             eventListeners.push(c);
           } else {
-            window.actionListeners[e] = [c];
+            window.actionListeners[key] = [c];
           }
         });
         return [];
@@ -20,9 +26,10 @@ export function useListeners(...listeners) {
     return function cleanup() {
       console.log("before cleanup", { ...window.actionListeners });
       listeners.reduce((a, c) => {
-        if (typeof c === "function") {
+        if (typeof c === "function" && !isThunk(c)) {
           a.forEach((e) => {
-            const eventListeners = window.actionListeners[e];
+            const key = asKey(e);
+            const eventListeners = window.actionListeners[key];
             eventListeners.splice(eventListeners.indexOf(c), 1);
           });
           return [];
@@ -31,19 +38,35 @@ export function useListeners(...listeners) {
       }, []);
       console.log("after cleanup", { ...window.actionListeners });
     };
+    // eslint-disable-next-line
   }, []);
 }
 
+const asArray = (a) => (Array.isArray(a) ? a : [a]);
 export function usePendingState({ pending, done, defaultValue = false }) {
   const [loading, setLoading] = useState(defaultValue);
 
   useListeners(
-    pending,
+    ...asArray(pending),
     () => setLoading(true),
 
-    ...done,
+    ...asArray(done),
     () => setLoading(false)
   );
 
   return loading;
 }
+
+export const withPendingState = (thunk) => (...done) => {
+  const [loading, setLoading] = useState(false);
+
+  useListeners(...done, () => setLoading(false));
+
+  return [
+    loading,
+    (...a) => {
+      setLoading(true);
+      return thunk(...a);
+    },
+  ];
+};

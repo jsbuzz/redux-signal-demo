@@ -1,8 +1,7 @@
-import { fetchDataStart, setData } from "../actions";
+import { setData } from "../actions";
 
 export const fetchData = () => (dispatch) => {
-  dispatch(fetchDataStart());
-
+  // dispatch(fetchDataStart());
   setTimeout(() => {
     dispatch(setData("This is the fetched data"));
   }, 1500);
