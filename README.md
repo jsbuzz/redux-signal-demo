@@ -13,8 +13,15 @@ const [isFetching, fetchError] = useFetchState({
   success: FETCH_DATA_SUCCESS,
   failure: FETCH_DATA_FAILURE,
 });
-...
-return <message>{(isFetching && "fetching...") || fetchError?.error || data}</message>
+
+return (
+  <div className="data-fetcher">
+    <button disabled={isFetching} onClick={() => dispatch(fetchData())}>
+      Fetch
+    </button>
+    {(isFetching && "fetching...") || fetchError?.error || data}
+  </div>
+);
 ```
 
 
