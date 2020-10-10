@@ -1,3 +1,23 @@
+# redux-signal
+
+Simple middleware for redux that allows components to listen on actions and react to them. In an effort to remove unnecessary error and pending states from the store and handle them as side-effects.
+
+```
+...
+import { fetchData } from "../redux/thunks/fetchData";
+
+...
+const data = useSelector(dataSelector) || fetchMessage;
+const [isFetching, fetchError] = useFetchState({
+  fetch: fetchData,
+  success: FETCH_DATA_SUCCESS,
+  failure: FETCH_DATA_FAILURE,
+});
+...
+return <message>{(isFetching && "fetching...") || fetchError?.error || data}</message>
+```
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
