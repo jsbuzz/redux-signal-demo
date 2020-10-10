@@ -16,11 +16,18 @@ export const ThirdDataFetcher = () => {
 
   return (
     <div className="data-fetcher">
-      {(isFetching && "loading...") || <div>{data}</div>}
-      <div>&nbsp;</div>
+      <pre>
+        {`
+        const [isFetching, doFetchData] = withPendingState(fetchData)(
+          FETCH_DATA_SUCCESS,
+          FETCH_DATA_FAILURE
+        );
+      `}
+      </pre>
       <button disabled={isFetching} onClick={() => dispatch(doFetchData())}>
         Fetch
       </button>
+      &nbsp; {(isFetching && "fetching...") || data}
     </div>
   );
 };

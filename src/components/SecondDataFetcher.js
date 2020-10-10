@@ -16,11 +16,18 @@ export const SecondDataFetcher = () => {
 
   return (
     <div className="data-fetcher">
-      {(isFetching && "loading...") || <div>{data}</div>}
-      <div>&nbsp;</div>
+      <pre>
+        {`
+        const isFetching = usePendingState({
+          pending: fetchData,
+          done: [FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE],
+        });
+      `}
+      </pre>
       <button disabled={isFetching} onClick={() => dispatch(fetchData())}>
         Fetch
       </button>
+      &nbsp; {(isFetching && "fetching...") || data}
     </div>
   );
 };

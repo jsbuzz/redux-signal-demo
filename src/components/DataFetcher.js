@@ -9,7 +9,7 @@ const dataSelector = (store) => store.data.data;
 export const DataFetcher = () => {
   const dispatch = useDispatch();
   const data = useSelector(dataSelector);
-  const [isLoading, setLoading] = useState(false);
+  const [isFetching, setLoading] = useState(false);
 
   useListeners(
     fetchData,
@@ -22,11 +22,24 @@ export const DataFetcher = () => {
 
   return (
     <div className="data-fetcher">
-      {(isLoading && "loading...") || <div>{data}</div>}
-      <div>&nbsp;</div>
-      <button disabled={isLoading} onClick={() => dispatch(fetchData())}>
+      <pre>
+        {`
+        const [isLoading, setLoading] = useState(false);
+
+        useListeners(
+          fetchData,
+          () => setLoading(true),
+
+          FETCH_DATA_SUCCESS,
+          FETCH_DATA_FAILURE,
+          () => setLoading(false)
+        );
+      `}
+      </pre>
+      <button disabled={isFetching} onClick={() => dispatch(fetchData())}>
         Fetch
       </button>
+      &nbsp; {(isFetching && "fetching...") || data}
     </div>
   );
 };
