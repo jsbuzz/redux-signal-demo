@@ -15,8 +15,8 @@ function App() {
           <button onClick={() => setShowFetchers(!showFetchers)}>
             {showFetchers ? "Hide fetchers" : "Show fetchers"}
           </button>
-          {showFetchers && <DataFetcher />}
           {showFetchers && <SecondDataFetcher />}
+          {showFetchers && <DataFetcher />}
           {showFetchers && <ThirdDataFetcher />}
         </header>
       </div>

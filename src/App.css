@@ -24,3 +24,7 @@ pre {
   display: block;
   word-wrap: break-word;
 }
+
+button {
+  margin-right: 10px;
+}

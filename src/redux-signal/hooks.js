@@ -5,7 +5,7 @@ const thunkRX = /.*=>.*dispatch.*=>/i;
 const isThunk = (fn) => !!fn.toString().match(thunkRX);
 const asKey = (str) => (typeof str === "function" ? str().toString() : str);
 
-export function useListeners(...listeners) {
+export function useActionListeners(...listeners) {
   useEffect(() => {
     listeners.reduce((a, c) => {
       if (typeof c === "function" && !isThunk(c)) {
@@ -43,24 +43,42 @@ export function useListeners(...listeners) {
 }
 
 const asArray = (a) => (Array.isArray(a) ? a : [a]);
-export function usePendingState({ pending, done, defaultValue = false }) {
-  const [loading, setLoading] = useState(defaultValue);
+export function useFetchState({ fetch, done, error, errorHandler = (e) => e }) {
+  const [state, setState] = useState({
+    pending: false,
+    error: null,
+  });
 
-  useListeners(
-    ...asArray(pending),
-    () => setLoading(true),
+  useActionListeners(
+    ...asArray(fetch),
+    () =>
+      setState({
+        pending: true,
+        error: null,
+      }),
 
     ...asArray(done),
-    () => setLoading(false)
+    () =>
+      setState({
+        pending: false,
+        error: null,
+      }),
+
+    ...asArray(error),
+    (errorAction) =>
+      setState({
+        pending: false,
+        error: errorHandler(errorAction),
+      })
   );
 
-  return loading;
+  return [state.pending, state.error];
 }
 
 export const withPendingState = (thunk) => (...done) => {
   const [loading, setLoading] = useState(false);
 
-  useListeners(...done, () => setLoading(false));
+  useActionListeners(...done, () => setLoading(false));
 
   return [
     loading,

@@ -2,32 +2,37 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FETCH_DATA_FAILURE, FETCH_DATA_SUCCESS } from "../redux/actions";
 import { fetchData } from "../redux/thunks/fetchData";
-import { usePendingState } from "../redux-signal/hooks";
+import { useFetchState } from "../redux-signal/hooks";
 
 const dataSelector = (store) => store.data.data;
 
 export const SecondDataFetcher = () => {
   const dispatch = useDispatch();
-  const data = useSelector(dataSelector);
-  const isFetching = usePendingState({
-    pending: fetchData,
-    done: [FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE],
+  const fetchMessage = "click to fetch data";
+  const data = useSelector(dataSelector) || fetchMessage;
+  const [isFetching, fetchError] = useFetchState({
+    fetch: fetchData,
+    done: FETCH_DATA_SUCCESS,
+    error: FETCH_DATA_FAILURE,
   });
 
   return (
     <div className="data-fetcher">
       <pre>
         {`
-        const isFetching = usePendingState({
+        const data = useSelector(dataSelector) || fetchMessage;
+        const [isFetching, fetchError] = usePendingState({
           pending: fetchData,
-          done: [FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE],
+          done: FETCH_DATA_SUCCESS,
+          error: FETCH_DATA_FAILURE,
         });
+        {(isFetching && "fetching...") || fetchError?.error || data}
       `}
       </pre>
       <button disabled={isFetching} onClick={() => dispatch(fetchData())}>
         Fetch
       </button>
-      &nbsp; {(isFetching && "fetching...") || data}
+      {(isFetching && "fetching...") || fetchError?.error || data}
     </div>
   );
 };

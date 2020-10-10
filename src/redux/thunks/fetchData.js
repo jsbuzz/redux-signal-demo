@@ -1,8 +1,13 @@
-import { setData } from "../actions";
+import { setData, fetchDataError } from "../actions";
 
+let counter = 0;
 export const fetchData = () => (dispatch) => {
   // dispatch(fetchDataStart());
   setTimeout(() => {
-    dispatch(setData("This is the fetched data"));
-  }, 1500);
+    if (++counter % 3) {
+      dispatch(setData(`This is the fetched data #${counter}`));
+    } else {
+      dispatch(fetchDataError(`Whoopsie #${counter}`));
+    }
+  }, 800);
 };

@@ -8,7 +8,8 @@ const dataSelector = (store) => store.data.data;
 
 export const ThirdDataFetcher = () => {
   const dispatch = useDispatch();
-  const data = useSelector(dataSelector);
+  const fetchMessage = "click to fetch data";
+  const data = useSelector(dataSelector) || fetchMessage;
   const [isFetching, doFetchData] = withPendingState(fetchData)(
     FETCH_DATA_SUCCESS,
     FETCH_DATA_FAILURE
@@ -18,16 +19,18 @@ export const ThirdDataFetcher = () => {
     <div className="data-fetcher">
       <pre>
         {`
+        const data = useSelector(dataSelector) || fetchMessage;
         const [isFetching, doFetchData] = withPendingState(fetchData)(
           FETCH_DATA_SUCCESS,
           FETCH_DATA_FAILURE
         );
+        {(isFetching && "fetching...") || data}
       `}
       </pre>
       <button disabled={isFetching} onClick={() => dispatch(doFetchData())}>
         Fetch
       </button>
-      &nbsp; {(isFetching && "fetching...") || data}
+      {(isFetching && "fetching...") || data}
     </div>
   );
 };

@@ -10,3 +10,8 @@ export const setData = (data) => ({
   type: FETCH_DATA_SUCCESS,
   data,
 });
+
+export const fetchDataError = (error) => ({
+  type: FETCH_DATA_FAILURE,
+  error,
+});
