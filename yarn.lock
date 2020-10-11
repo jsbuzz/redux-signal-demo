@@ -7665,6 +7665,12 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
+redux-signal@jsBuzz/redux-signal#0.1.0:
+  version "0.1.0"
+  resolved "https://codeload.github.com/jsBuzz/redux-signal/tar.gz/df2e95dbdfeb10a8c5b638e1caf9dd7ce732f40b"
+  dependencies:
+    react "^16.13.1"
+
 redux-thunk@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"

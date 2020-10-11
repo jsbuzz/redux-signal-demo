@@ -5,6 +5,7 @@ import "./App.css";
 import { DataFetcher } from "./components/DataFetcher";
 import { SecondDataFetcher } from "./components/SecondDataFetcher";
 import { ThirdDataFetcher } from "./components/ThirdDataFetcher";
+import { DataFetcherWithTransitions } from "./components/DataFetcherWithTransitions";
 
 function App() {
   const [showFetchers, setShowFetchers] = useState(true);
@@ -15,6 +16,7 @@ function App() {
           <button onClick={() => setShowFetchers(!showFetchers)}>
             {showFetchers ? "Hide fetchers" : "Show fetchers"}
           </button>
+          {showFetchers && <DataFetcherWithTransitions />}
           {showFetchers && <SecondDataFetcher />}
           {showFetchers && <DataFetcher />}
           {showFetchers && <ThirdDataFetcher />}

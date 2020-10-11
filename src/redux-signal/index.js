@@ -1,14 +1,30 @@
 import { useEffect, useState } from "react";
 
+// 32 bit FNV-1a hash
+// Ref.: http://isthe.com/chongo/tech/comp/fnv/
+function hash(str) {
+  var FNV1_32A_INIT = 0x811c9dc5;
+  var hval = FNV1_32A_INIT;
+  for (var i = 0; i < str.length; ++i) {
+    hval ^= str.charCodeAt(i);
+    hval +=
+      (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
+  }
+  return hval >>> 0;
+}
+
 const actionListeners = {};
+window.actionListeners = actionListeners;
 
 const thunkRX = /.*=>.*dispatch.*=>/i;
 
+const thunkKey = (thunkFn) => "thunk#" + hash(thunkFn.toString());
+
 const isThunk = (fn) => !!fn.toString().match(thunkRX);
 const asArray = (a) => (Array.isArray(a) ? a : [a]);
-const asKey = (str) => (typeof str === "function" ? str().toString() : str);
+const asKey = (str) => (typeof str === "function" ? thunkKey(str()) : str);
 const actionKey = (action) =>
-  typeof action === "function" ? action.toString() : action.type;
+  typeof action === "function" ? thunkKey(action) : action.type;
 
 // redux middleware that will call the action listeners
 export const actionListener = () => (next) => (action) => {
@@ -107,4 +123,28 @@ export const withPendingState = (thunk) => (...done) => {
       return thunk(...a);
     },
   ];
+};
+
+// hook for transitions
+export const useTransitions = (transitionStates, transitionReducer) => {
+  const [state, setState] = useState({});
+
+  let listeners = [];
+  Object.keys(transitionStates).forEach((transition) => {
+    listeners = [
+      ...listeners,
+      ...asArray(transitionStates[transition]),
+      (value) =>
+        setState(
+          Object.keys(transitionReducer).reduce((st, key) => {
+            st[key] = transitionReducer[key](transition, value);
+            return st;
+          }, {})
+        ),
+    ];
+  });
+
+  useActionListeners(...listeners);
+
+  return state;
 };

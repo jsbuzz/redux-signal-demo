@@ -29,7 +29,7 @@ export const SecondDataFetcher = () => {
         {(isFetching && "fetching...") || fetchError?.error || data}
       `}
       </pre>
-      <button disabled={isFetching} onClick={() => dispatch(fetchData())}>
+      <button disabled={isFetching} onClick={() => dispatch(fetchData(500))}>
         Fetch
       </button>
       {(isFetching && "fetching...") || fetchError?.error || data}
