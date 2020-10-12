@@ -3,14 +3,13 @@ import { useEffect, useState } from "react";
 // 32 bit FNV-1a hash
 // Ref.: http://isthe.com/chongo/tech/comp/fnv/
 function hash(str) {
-  var FNV1_32A_INIT = 0x811c9dc5;
-  var hval = FNV1_32A_INIT;
-  for (var i = 0; i < str.length; ++i) {
-    hval ^= str.charCodeAt(i);
-    hval +=
-      (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < str.length; ++i) {
+    hash ^= str.charCodeAt(i);
+    hash +=
+      (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
   }
-  return hval >>> 0;
+  return hash >>> 0;
 }
 
 const actionListeners = {};
@@ -134,13 +133,7 @@ export const useTransitions = (transitionStates, transitionReducer) => {
     listeners = [
       ...listeners,
       ...asArray(transitionStates[transition]),
-      (value) =>
-        setState(
-          Object.keys(transitionReducer).reduce((st, key) => {
-            st[key] = transitionReducer[key](transition, value);
-            return st;
-          }, {})
-        ),
+      (value) => setState(transitionReducer(transition, value)),
     ];
   });
 

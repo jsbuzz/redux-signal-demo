@@ -12,10 +12,10 @@ const fetchStates = {
   failure: FETCH_DATA_FAILURE,
 };
 
-const fetchReducer = {
-  isFetching: (state) => state === "pending",
-  fetchError: (state, { error }) => state === "failure" && error,
-};
+const fetchReducer = (state, { error }) => ({
+  isFetching: state === "pending",
+  fetchError: state === "failure" && error,
+});
 
 export const DataFetcherWithTransitions = () => {
   const dispatch = useDispatch();
@@ -33,10 +33,10 @@ export const DataFetcherWithTransitions = () => {
           failure: FETCH_DATA_FAILURE,
         };
 
-        const fetchReducer = {
-          isFetching: (state) => state === "pending",
-          fetchError: (state, { error }) => state === "failure" && error,
-        };
+        const fetchReducer = (state, { error }) => ({
+          isFetching: state === "pending",
+          fetchError: state === "failure" && error,
+        });
 
         const data = useSelector(dataSelector) || fetchMessage;
         const { isFetching, fetchError } = useTransitions(fetchStates, fetchReducer);
