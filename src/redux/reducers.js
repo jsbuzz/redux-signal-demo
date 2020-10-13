@@ -13,6 +13,7 @@ const dataReducer = (state = dataReducerState, action) => {
       };
 
     default:
+      console.log("dataReducer");
       return state;
   }
 };
@@ -37,6 +38,7 @@ const uploadReducer = (state = uploadReducerState, action) => {
       };
 
     default:
+      console.log("uploadReducer");
       return state;
   }
 };

@@ -38,21 +38,13 @@ export const createActionListener = () => {
       if (listeners) {
         listeners.forEach((listener) => listener(action));
       }
-      return next(action);
+      if (!action._stopPropagation) return next(action);
+      return null;
     },
     setStore: (store) => {
       context.store = store;
     },
   };
-};
-export const actionListener = (store) => (next) => (action) => {
-  console.log(store);
-  const key = actionKey(action);
-  const listeners = actionListeners[key];
-  if (listeners) {
-    listeners.forEach((listener) => listener(action));
-  }
-  return next(action);
 };
 
 const processListeners = (listeners, eventCallback) => {
@@ -149,7 +141,11 @@ export const withPendingState = (thunk) => (...done) => {
 };
 
 // hook for transitions
-export const useTransitions = (transitionStates, transitionReducer) => {
+export const useTransitions = (
+  transitionStates,
+  transitionReducer,
+  stopPropagation = []
+) => {
   const [state, setState] = useState({});
 
   let listeners = [];
@@ -157,7 +153,12 @@ export const useTransitions = (transitionStates, transitionReducer) => {
     listeners = [
       ...listeners,
       ...asArray(transitionStates[transition]),
-      (value) => setState(transitionReducer(transition, value)),
+      (action) => {
+        setState(transitionReducer(transition, action));
+        if (stopPropagation.includes(action.type)) {
+          action._stopPropagation = true;
+        }
+      },
     ];
   });
 

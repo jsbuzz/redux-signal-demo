@@ -18,13 +18,16 @@ const uploadReducer = (state, { error, percentage }) => ({
   uploadPercentage: percentage || 0,
 });
 
+const stopPropagation = [UPLOAD_CHUNK, UPLOAD_FAILURE];
+
 export const FileUpload = () => {
   const dispatch = useDispatch();
 
   const { uploadedFiles, totalSize } = useSelector(uploadedFilesSelector);
   const { isUploading, uploadPercentage, uploadError } = useTransitions(
     uploadStates,
-    uploadReducer
+    uploadReducer,
+    stopPropagation
   );
 
   return (
