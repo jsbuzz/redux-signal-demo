@@ -16,7 +16,7 @@ pre {
   color: #666;
   page-break-inside: avoid;
   font-family: monospace;
-  font-size: 15px;
+  font-size: 12px;
   line-height: 1.6;
   margin-bottom: 1.6em;
   max-width: 100%;
@@ -27,4 +27,22 @@ pre {
 
 button {
   margin-right: 10px;
+}
+
+progress {
+  position: relative;
+  top: 4px;
+}
+
+.upload-error {
+  color: red;
+}
+
+.uploaded-files {
+  margin: 10px;
+}
+
+.uploaded-files div {
+  font-size: 12px;
+  margin-top: 5px;
 }

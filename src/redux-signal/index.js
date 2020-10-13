@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useStore } from "react-redux";
 
 // 32 bit FNV-1a hash
 // Ref.: http://isthe.com/chongo/tech/comp/fnv/
@@ -26,7 +27,26 @@ const actionKey = (action) =>
   typeof action === "function" ? thunkKey(action) : action.type;
 
 // redux middleware that will call the action listeners
-export const actionListener = () => (next) => (action) => {
+export const createActionListener = () => {
+  const context = {};
+
+  return {
+    actionListener: () => (next) => (action) => {
+      // console.log(context.store);
+      const key = actionKey(action);
+      const listeners = context.store._actionListeners[key];
+      if (listeners) {
+        listeners.forEach((listener) => listener(action));
+      }
+      return next(action);
+    },
+    setStore: (store) => {
+      context.store = store;
+    },
+  };
+};
+export const actionListener = (store) => (next) => (action) => {
+  console.log(store);
   const key = actionKey(action);
   const listeners = actionListeners[key];
   if (listeners) {
@@ -50,19 +70,23 @@ const processListeners = (listeners, eventCallback) => {
 
 // hook for setting listeners on actions
 export function useActionListeners(...listeners) {
+  const store = useStore();
+  if (!store._actionListeners) {
+    store._actionListeners = {};
+  }
   useEffect(() => {
     processListeners(listeners, (event, callback) => {
-      const eventListeners = actionListeners[event];
+      const eventListeners = store._actionListeners[event];
       if (eventListeners) {
         eventListeners.push(callback);
       } else {
-        actionListeners[event] = [callback];
+        store._actionListeners[event] = [callback];
       }
     });
 
     return function cleanup() {
       processListeners(listeners, (event, callback) => {
-        const eventListeners = actionListeners[event];
+        const eventListeners = store._actionListeners[event];
         eventListeners.splice(eventListeners.indexOf(callback), 1);
       });
     };

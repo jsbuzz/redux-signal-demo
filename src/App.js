@@ -6,20 +6,22 @@ import { DataFetcher } from "./components/DataFetcher";
 import { SecondDataFetcher } from "./components/SecondDataFetcher";
 import { ThirdDataFetcher } from "./components/ThirdDataFetcher";
 import { DataFetcherWithTransitions } from "./components/DataFetcherWithTransitions";
+import { FileUpload } from "./components/FileUpload";
 
 function App() {
-  const [showFetchers, setShowFetchers] = useState(true);
+  const [showComponents, setShowComponents] = useState(true);
   return (
     <Provider store={store}>
       <div className="App">
         <header className="App-header">
-          <button onClick={() => setShowFetchers(!showFetchers)}>
-            {showFetchers ? "Hide fetchers" : "Show fetchers"}
+          <button onClick={() => setShowComponents(!showComponents)}>
+            {showComponents ? "Hide Components" : "Show Components"}
           </button>
-          {showFetchers && <DataFetcherWithTransitions />}
-          {showFetchers && <SecondDataFetcher />}
-          {showFetchers && <DataFetcher />}
-          {showFetchers && <ThirdDataFetcher />}
+          {showComponents && <FileUpload />}
+          {showComponents && <DataFetcherWithTransitions />}
+          {showComponents && <SecondDataFetcher />}
+          {showComponents && <DataFetcher />}
+          {showComponents && <ThirdDataFetcher />}
         </header>
       </div>
     </Provider>
