@@ -1,4 +1,4 @@
-# redux-signal
+# redux-transitions demo
 
 Simple middleware for redux that allows components to listen on actions and react to them. In an effort to remove unnecessary error and pending states from the store and handle them as side-effects.
 
@@ -24,7 +24,6 @@ return (
   </div>
 );
 ```
-
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

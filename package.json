@@ -1,5 +1,5 @@
 {
-  "name": "redux-signal-demo",
+  "name": "redux-transitions-demo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,8 +11,8 @@
     "react-redux": "^7.2.1",
     "react-scripts": "3.4.3",
     "redux": "^4.0.5",
-    "redux-signal": "jsBuzz/redux-signal#0.1.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "redux-transitions": "^0.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTransitions } from "redux-transitions";
 import { FETCH_DATA_FAILURE, FETCH_DATA_SUCCESS } from "../redux/actions";
 import { fetchData } from "../redux/thunks/fetchData";
-import { useTransitions } from "../redux-signal";
 
 const dataSelector = (store) => store.data.data;
 

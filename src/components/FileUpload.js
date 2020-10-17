@@ -1,20 +1,24 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTransitions } from "redux-transitions";
 import { UPLOAD_CHUNK, UPLOAD_SUCCESS, UPLOAD_FAILURE } from "../redux/actions";
 import { uploadFile } from "../redux/thunks/uploadFile";
-import { useTransitions } from "../redux-signal";
 
 const uploadedFilesSelector = (store) => store.upload;
 
+const PENDING_STATE = "pending";
+const SUCCESS_STATE = "success";
+const FAILURE_STATE = "failure";
+
 const uploadStates = {
-  pending: [uploadFile, UPLOAD_CHUNK],
-  success: UPLOAD_SUCCESS,
-  failure: UPLOAD_FAILURE,
+  [PENDING_STATE]: [uploadFile, UPLOAD_CHUNK],
+  [SUCCESS_STATE]: UPLOAD_SUCCESS,
+  [FAILURE_STATE]: UPLOAD_FAILURE,
 };
 
 const uploadReducer = (state, { error, percentage }) => ({
-  isUploading: state === "pending",
-  uploadError: state === "failure" && error,
+  isUploading: state === PENDING_STATE,
+  uploadError: state === FAILURE_STATE && error,
   uploadPercentage: percentage || 0,
 });
 

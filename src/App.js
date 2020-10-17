@@ -4,7 +4,6 @@ import store from "./redux/store";
 import "./App.css";
 import { DataFetcher } from "./components/DataFetcher";
 import { SecondDataFetcher } from "./components/SecondDataFetcher";
-import { ThirdDataFetcher } from "./components/ThirdDataFetcher";
 import { DataFetcherWithTransitions } from "./components/DataFetcherWithTransitions";
 import { FileUpload } from "./components/FileUpload";
 
@@ -21,7 +20,6 @@ function App() {
           {showComponents && <DataFetcherWithTransitions />}
           {showComponents && <SecondDataFetcher />}
           {showComponents && <DataFetcher />}
-          {showComponents && <ThirdDataFetcher />}
         </header>
       </div>
     </Provider>
