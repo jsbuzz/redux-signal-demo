@@ -5,7 +5,7 @@ import "./App.css";
 import { DataFetcher } from "./components/DataFetcher";
 import { SecondDataFetcher } from "./components/SecondDataFetcher";
 import { DataFetcherWithTransitions } from "./components/DataFetcherWithTransitions";
-import { FileUpload } from "./components/FileUpload";
+import FileUpload from "./components/FileUpload";
 
 function App() {
   const [showComponents, setShowComponents] = useState(true);
