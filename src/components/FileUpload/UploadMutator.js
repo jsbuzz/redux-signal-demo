@@ -12,13 +12,16 @@ const PENDING_STATE = "pending";
 const SUCCESS_STATE = "success";
 const FAILURE_STATE = "failure";
 
-const uploadStates = {
+export const uploadStates = {
   [PENDING_STATE]: [uploadFile, UPLOAD_CHUNK],
   [SUCCESS_STATE]: UPLOAD_SUCCESS,
   [FAILURE_STATE]: UPLOAD_FAILURE,
 };
 
-const uploadReducer = (state, { error, percentage }) => ({
+export const uploadReducer = (
+  state = SUCCESS_STATE,
+  { error, percentage } = {}
+) => ({
   isUploading: state === PENDING_STATE,
   uploadError: state === FAILURE_STATE && error,
   uploadPercentage: percentage || 0,
