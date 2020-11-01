@@ -8,9 +8,9 @@ import {
 } from "../../redux/actions";
 import { uploadFile } from "../../redux/thunks/uploadFile";
 
-const PENDING_STATE = "pending";
-const SUCCESS_STATE = "success";
-const FAILURE_STATE = "failure";
+export const PENDING_STATE = "pending";
+export const SUCCESS_STATE = "success";
+export const FAILURE_STATE = "failure";
 
 export const uploadStates = {
   [PENDING_STATE]: [uploadFile, UPLOAD_CHUNK],

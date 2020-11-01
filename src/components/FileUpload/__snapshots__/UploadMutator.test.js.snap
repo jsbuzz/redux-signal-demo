@@ -27,7 +27,7 @@ exports[`UploadMutator Error transition state should match snapshot 1`] = `
 </Fragment>
 `;
 
-exports[`UploadMutator Pending transition state start should match snapshot 1`] = `
+exports[`UploadMutator Pending transition state with \`uploadFile\` should match snapshot 1`] = `
 <Fragment>
   <button
     disabled={true}

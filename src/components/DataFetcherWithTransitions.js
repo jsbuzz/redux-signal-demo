@@ -12,7 +12,7 @@ const fetchStates = {
   failure: FETCH_DATA_FAILURE,
 };
 
-const fetchReducer = (state, { error }) => ({
+const fetchReducer = (state = FETCH_DATA_SUCCESS, { error } = {}) => ({
   isFetching: state === "pending",
   fetchError: state === "failure" && error,
 });
