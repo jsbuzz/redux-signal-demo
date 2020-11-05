@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { usePendingState } from "redux-transitions";
-import { FETCH_DATA_FAILURE, FETCH_DATA_SUCCESS } from "../redux/actions";
+import { useThunkState } from "../redux-transitions";
 import { fetchData } from "../redux/thunks/fetchData";
 
 const dataSelector = (store) => store.data.data;
@@ -10,11 +9,7 @@ export const SecondDataFetcher = () => {
   const dispatch = useDispatch();
   const fetchMessage = "click to fetch data";
   const data = useSelector(dataSelector) || fetchMessage;
-  const [isFetching, fetchError] = usePendingState({
-    pending: fetchData,
-    success: FETCH_DATA_SUCCESS,
-    failure: FETCH_DATA_FAILURE,
-  });
+  const [isFetching, fetchError] = useThunkState(fetchData);
 
   return (
     <div className="data-fetcher">

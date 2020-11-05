@@ -1,40 +1,25 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useTransitions } from "redux-transitions";
-import {
-  UPLOAD_CHUNK,
-  UPLOAD_SUCCESS,
-  UPLOAD_FAILURE,
-} from "../../redux/actions";
 import { uploadFile } from "../../redux/thunks/uploadFile";
-
-export const PENDING_STATE = "pending";
-export const SUCCESS_STATE = "success";
-export const FAILURE_STATE = "failure";
-
-export const uploadStates = {
-  [PENDING_STATE]: [uploadFile, UPLOAD_CHUNK],
-  [SUCCESS_STATE]: UPLOAD_SUCCESS,
-  [FAILURE_STATE]: UPLOAD_FAILURE,
-};
+import { useThunkState } from "../../redux-transitions";
 
 export const uploadReducer = (
-  state = SUCCESS_STATE,
+  state = "success",
   { error, percentage } = {}
 ) => ({
-  isUploading: state === PENDING_STATE,
-  uploadError: state === FAILURE_STATE && error,
+  isUploading: state === "pending",
+  uploadError: state === "failure" && error,
   uploadPercentage: percentage || 0,
 });
 
 // this component only relies on Transition state
 // @transitionState
 // @dispatcher
-export const UploadMutator = () => {
+export const UploadSection = () => {
   const dispatch = useDispatch();
 
-  const { isUploading, uploadPercentage, uploadError } = useTransitions(
-    uploadStates,
+  const { isUploading, uploadPercentage, uploadError } = useThunkState(
+    uploadFile,
     uploadReducer
   );
 

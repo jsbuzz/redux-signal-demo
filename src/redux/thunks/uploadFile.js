@@ -1,8 +1,9 @@
+import { thunk } from "../../redux-transitions";
 import { addUploadedFile, uploadError, uploadChunk } from "../actions";
 
 let counter = 1;
-export const uploadFile = () => (dispatch) => {
-  const step = 200 + getRandomInt(400);
+export const uploadFile = thunk(() => (dispatch) => {
+  const step = 100 + getRandomInt(300);
 
   setTimeout(() => dispatch(uploadChunk(15)), step);
   setTimeout(() => dispatch(uploadChunk(35)), 2 * step);
@@ -21,7 +22,11 @@ export const uploadFile = () => (dispatch) => {
       ),
     6.5 * step
   );
-};
+}).withTransitions({
+  pending: uploadChunk().type,
+  success: addUploadedFile({}).type,
+  failure: uploadError().type,
+});
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
