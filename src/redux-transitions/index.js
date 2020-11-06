@@ -151,14 +151,9 @@ export const mockTransition = (transitionStates, transitionReducer) => (
 
 export function thunk(thunkFn) {
   thunkFn[IS_THUNK] = true;
-  thunkFn.withTransitions = (transitions) => {
-    thunkFn.transitions = {
-      ...transitions,
-      pending: [
-        thunkFn,
-        ...(transitions.pending ? asArray(transitions.pending) : []),
-      ],
-    };
+  thunkFn.withTransitionStates = (transitions) => {
+    thunkFn.transitions =
+      typeof transitions === "function" ? transitions(thunkFn) : transitions;
 
     return thunkFn;
   };
@@ -170,6 +165,6 @@ const defaultReducer = (state, error) => [
   state === "failure" && error,
 ];
 
-export function useThunkState(thunkFn, reducer) {
+export function useThunkReducer(thunkFn, reducer) {
   return useTransitions(thunkFn.transitions, reducer || defaultReducer);
 }

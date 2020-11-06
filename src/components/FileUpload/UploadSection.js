@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { uploadFile } from "../../redux/thunks/uploadFile";
-import { useThunkState } from "../../redux-transitions";
+import { useThunkReducer } from "../../redux-transitions";
 
 export const uploadReducer = (
   state = "success",
@@ -18,7 +18,7 @@ export const uploadReducer = (
 export const UploadSection = () => {
   const dispatch = useDispatch();
 
-  const { isUploading, uploadPercentage, uploadError } = useThunkState(
+  const { isUploading, uploadPercentage, uploadError } = useThunkReducer(
     uploadFile,
     uploadReducer
   );

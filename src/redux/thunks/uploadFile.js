@@ -22,11 +22,11 @@ export const uploadFile = thunk(() => (dispatch) => {
       ),
     6.5 * step
   );
-}).withTransitions({
-  pending: uploadChunk().type,
+}).withTransitionStates((uploadFile) => ({
+  pending: [uploadFile, uploadChunk().type],
   success: addUploadedFile({}).type,
   failure: uploadError().type,
-});
+}));
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));

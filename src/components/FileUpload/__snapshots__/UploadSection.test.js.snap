@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UploadSection Base transition state should match snapshot 1`] = `undefined`;
+
+exports[`UploadSection Error transition state should match snapshot 1`] = `undefined`;
+
+exports[`UploadSection Pending transition state with \`uploadFile\` should match snapshot 1`] = `undefined`;
+
+exports[`UploadSection Pending transition state with Chunk should match snapshot 1`] = `undefined`;

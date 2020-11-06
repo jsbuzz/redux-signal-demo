@@ -1,18 +1,13 @@
 import React from "react";
 import { shallow } from "enzyme";
-import {
-  UploadSection,
-  uploadStates,
-  uploadReducer,
-  SUCCESS_STATE,
-} from "./UploadSection";
+import { UploadSection, uploadReducer } from "./UploadSection";
 import * as reduxTransitions from "redux-transitions";
 import * as reactRedux from "react-redux";
 import { uploadChunk, uploadError, addUploadedFile } from "../../redux/actions";
 import { uploadFile } from "../../redux/thunks/uploadFile";
 
 const mockUploadTransition = reduxTransitions.mockTransition(
-  uploadStates,
+  uploadFile.transitions,
   uploadReducer
 );
 
@@ -20,7 +15,7 @@ describe("uploadReducer", () => {
   it("SUCCESS_STATE and empty state should be equal", () => {
     expect(uploadReducer()).toEqual(
       uploadReducer(
-        SUCCESS_STATE,
+        "success",
         addUploadedFile({ fileName: "test", fileSize: 99 })
       )
     );

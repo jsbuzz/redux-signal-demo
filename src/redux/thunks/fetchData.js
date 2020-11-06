@@ -10,7 +10,8 @@ export const fetchData = thunk((delay = 800) => (dispatch) => {
       dispatch(fetchDataError(`Whoopsie #${counter / 3}`));
     }
   }, delay);
-}).withTransitions({
+}).withTransitionStates((fetchData) => ({
+  pending: fetchData,
   success: setData().type,
   failure: fetchDataError().type,
-});
+}));
