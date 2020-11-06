@@ -18,6 +18,11 @@ const actionTypeKey = (actionType) =>
 // you can use this property in your actions to mark them
 // so the middleware will not propagate them to your reducers
 export const STOP_PROPAGATION = "_stopPropagation";
+export const defaultStates = {
+  pending: "pending",
+  success: "success",
+  failure: "failure",
+};
 
 export const createActionListener = () => {
   const context = {};
@@ -161,8 +166,8 @@ export function thunk(thunkFn) {
 }
 
 const defaultReducer = (state, error) => [
-  state === "pending",
-  state === "failure" && error,
+  state === defaultStates.pending,
+  state === defaultStates.failure && error,
 ];
 
 export function useThunkReducer(thunkFn, reducer) {

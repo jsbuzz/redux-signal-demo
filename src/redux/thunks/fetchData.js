@@ -1,5 +1,7 @@
-import { thunk } from "../../redux-transitions";
+import { defaultStates, thunk } from "../../redux-transitions";
 import { setData, fetchDataError } from "../actions";
+
+const { pending, success, failure } = defaultStates;
 
 let counter = 0;
 export const fetchData = thunk((delay = 800) => (dispatch) => {
@@ -11,7 +13,7 @@ export const fetchData = thunk((delay = 800) => (dispatch) => {
     }
   }, delay);
 }).withTransitionStates((fetchData) => ({
-  pending: fetchData,
-  success: setData().type,
-  failure: fetchDataError().type,
+  [pending]: fetchData,
+  [success]: setData().type,
+  [failure]: fetchDataError().type,
 }));

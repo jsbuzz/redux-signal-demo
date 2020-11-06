@@ -1,5 +1,7 @@
-import { thunk } from "../../redux-transitions";
+import { defaultStates, thunk } from "../../redux-transitions";
 import { addUploadedFile, uploadError, uploadChunk } from "../actions";
+
+const { pending, success, failure } = defaultStates;
 
 let counter = 1;
 export const uploadFile = thunk(() => (dispatch) => {
@@ -23,9 +25,9 @@ export const uploadFile = thunk(() => (dispatch) => {
     6.5 * step
   );
 }).withTransitionStates((uploadFile) => ({
-  pending: [uploadFile, uploadChunk().type],
-  success: addUploadedFile({}).type,
-  failure: uploadError().type,
+  [pending]: [uploadFile, uploadChunk().type],
+  [success]: addUploadedFile({}).type,
+  [failure]: uploadError().type,
 }));
 
 function getRandomInt(max) {

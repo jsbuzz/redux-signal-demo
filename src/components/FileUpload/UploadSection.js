@@ -1,14 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { uploadFile } from "../../redux/thunks/uploadFile";
-import { useThunkReducer } from "../../redux-transitions";
+import { defaultStates, useThunkReducer } from "../../redux-transitions";
 
-export const uploadReducer = (
-  state = "success",
-  { error, percentage } = {}
-) => ({
-  isUploading: state === "pending",
-  uploadError: state === "failure" && error,
+const { pending, success, failure } = defaultStates;
+export const uploadReducer = (state = success, { error, percentage } = {}) => ({
+  isUploading: state === pending,
+  uploadError: state === failure && error,
   uploadPercentage: percentage || 0,
 });
 
