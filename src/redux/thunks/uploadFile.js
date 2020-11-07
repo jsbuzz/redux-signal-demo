@@ -1,4 +1,4 @@
-import { defaultStates, thunk } from "../../redux-transitions";
+import { defaultStates, thunk } from "redux-transitions";
 import { addUploadedFile, uploadError, uploadChunk } from "../actions";
 
 const { pending, success, failure } = defaultStates;

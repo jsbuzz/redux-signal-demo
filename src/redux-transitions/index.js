@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useStore } from "react-redux";
 
-const ACTION_LISTENERS = "_actionListeners";
-const IS_THUNK = "_thunkMe";
+const ACTION_LISTENERS = Symbol("actionListeners");
+const IS_THUNK = Symbol("is-thunk");
 const thunkRX = /^([^=]+|\([^)]+\))[\s]*=>[\s]*([^=]+|\([^)]+\))[\s]*=>[\s]*|^function[\s]*[^(]*\([^)]*\)[\s]*{[\s]*return[\s]+function[\s]*\([^)]*\)/i;
 
 const thunkKey = (thunkFn) =>

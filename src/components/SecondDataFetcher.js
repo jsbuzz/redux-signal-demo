@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useThunkReducer } from "../redux-transitions";
+import { useThunkReducer } from "redux-transitions";
 import { fetchData } from "../redux/thunks/fetchData";
 
 const dataSelector = (store) => store.data.data;
