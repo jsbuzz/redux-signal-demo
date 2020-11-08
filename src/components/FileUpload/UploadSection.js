@@ -1,7 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { uploadFile } from "../../redux/thunks/uploadFile";
-import { defaultStates, useThunkReducer } from "redux-transitions";
+import { defaultStates } from "redux-transitions";
+import { useThunkReducer } from "redux-transitions/hooks";
 
 const { pending, success, failure } = defaultStates;
 export const uploadReducer = (state = success, { error, percentage } = {}) => ({

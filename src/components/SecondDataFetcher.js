@@ -1,7 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useThunkReducer } from "redux-transitions";
+import { useThunkReducer } from "redux-transitions/hooks";
 import { fetchData } from "../redux/thunks/fetchData";
+import { Code } from "./Code";
 
 const dataSelector = (store) => store.data.data;
 
@@ -13,17 +14,23 @@ export const SecondDataFetcher = () => {
 
   return (
     <div className="data-fetcher">
-      <pre>
+      <Code>
         {`
+        const dispatch = useDispatch();
+        const fetchMessage = "click to fetch data";
         const data = useSelector(dataSelector) || fetchMessage;
-        const [isFetching, fetchError] = usePendingState({
-          fetch: fetchData,
-          success: FETCH_DATA_SUCCESS,
-          failure: FETCH_DATA_FAILURE,
-        });
-        {(isFetching && "fetching...") || fetchError?.error || data}
+        const [isFetching, fetchError] = useThunkReducer(fetchData);
+
+        return (
+          <>
+            <button disabled={isFetching} onClick={() => dispatch(fetchData(500))}>
+              Fetch
+            </button>
+            {(isFetching && "fetching...") || fetchError?.error || data}
+          </>
+        )
       `}
-      </pre>
+      </Code>
       <button disabled={isFetching} onClick={() => dispatch(fetchData(500))}>
         Fetch
       </button>

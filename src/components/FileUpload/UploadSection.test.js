@@ -1,12 +1,13 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { UploadSection, uploadReducer } from "./UploadSection";
-import * as reduxTransitions from "redux-transitions";
+import { mockTransition } from "redux-transitions";
+import * as reduxTransitionHooks from "redux-transitions/hooks";
 import * as reactRedux from "react-redux";
 import { uploadChunk, uploadError, addUploadedFile } from "../../redux/actions";
 import { uploadFile } from "../../redux/thunks/uploadFile";
 
-const mockUploadTransition = reduxTransitions.mockTransition(
+const mockUploadTransition = mockTransition(
   uploadFile.transitions,
   uploadReducer
 );
@@ -32,7 +33,7 @@ describe("UploadSection", () => {
     jest
       .spyOn(reactRedux, "useDispatch")
       .mockReturnValue((action) => dispatched.push(action));
-    useTransitionsStub = jest.spyOn(reduxTransitions, "useTransitions");
+    useTransitionsStub = jest.spyOn(reduxTransitionHooks, "useThunkReducer");
   });
 
   describe("Base transition state", () => {
