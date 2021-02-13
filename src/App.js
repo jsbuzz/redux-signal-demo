@@ -17,8 +17,8 @@ function App() {
             {showComponents ? "Hide Components" : "Show Components"}
           </button>
           {showComponents && <FileUpload />}
-          {showComponents && <DataFetcherWithTransitions />}
           {showComponents && <SecondDataFetcher />}
+          {showComponents && <DataFetcherWithTransitions />}
           {showComponents && <DataFetcher />}
         </header>
       </div>

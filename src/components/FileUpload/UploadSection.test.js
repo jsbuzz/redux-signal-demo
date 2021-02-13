@@ -1,18 +1,14 @@
 import React from "react";
 import { shallow } from "enzyme";
-import {
-  UploadMutator,
-  uploadStates,
-  uploadReducer,
-  SUCCESS_STATE,
-} from "./UploadMutator";
-import * as reduxTransitions from "redux-transitions";
+import { UploadSection, uploadReducer } from "./UploadSection";
+import { mockTransition } from "redux-transitions";
+import * as reduxTransitionHooks from "redux-transitions/hooks";
 import * as reactRedux from "react-redux";
 import { uploadChunk, uploadError, addUploadedFile } from "../../redux/actions";
 import { uploadFile } from "../../redux/thunks/uploadFile";
 
-const mockUploadTransition = reduxTransitions.mockTransition(
-  uploadStates,
+const mockUploadTransition = mockTransition(
+  uploadFile.transitions,
   uploadReducer
 );
 
@@ -20,14 +16,14 @@ describe("uploadReducer", () => {
   it("SUCCESS_STATE and empty state should be equal", () => {
     expect(uploadReducer()).toEqual(
       uploadReducer(
-        SUCCESS_STATE,
+        "success",
         addUploadedFile({ fileName: "test", fileSize: 99 })
       )
     );
   });
 });
 
-describe("UploadMutator", () => {
+describe("UploadSection", () => {
   let dispatched;
   let wrapper;
   let useTransitionsStub;
@@ -37,13 +33,13 @@ describe("UploadMutator", () => {
     jest
       .spyOn(reactRedux, "useDispatch")
       .mockReturnValue((action) => dispatched.push(action));
-    useTransitionsStub = jest.spyOn(reduxTransitions, "useTransitions");
+    useTransitionsStub = jest.spyOn(reduxTransitionHooks, "useThunkReducer");
   });
 
   describe("Base transition state", () => {
     beforeEach(() => {
       useTransitionsStub.mockReturnValue({});
-      wrapper = shallow(<UploadMutator />);
+      wrapper = shallow(<UploadSection />);
     });
 
     it("should match snapshot", () => {
@@ -72,7 +68,7 @@ describe("UploadMutator", () => {
   describe("Pending transition state with `uploadFile`", () => {
     beforeEach(() => {
       useTransitionsStub.mockReturnValue(mockUploadTransition(uploadFile));
-      wrapper = shallow(<UploadMutator />);
+      wrapper = shallow(<UploadSection />);
     });
 
     it("should match snapshot", () => {
@@ -98,7 +94,7 @@ describe("UploadMutator", () => {
       useTransitionsStub.mockReturnValue(
         mockUploadTransition(uploadChunk(chunk))
       );
-      wrapper = shallow(<UploadMutator />);
+      wrapper = shallow(<UploadSection />);
     });
 
     it("should match snapshot", () => {
@@ -125,7 +121,7 @@ describe("UploadMutator", () => {
       useTransitionsStub.mockReturnValue(
         mockUploadTransition(uploadError(error))
       );
-      wrapper = shallow(<UploadMutator />);
+      wrapper = shallow(<UploadSection />);
     });
 
     it("should match snapshot", () => {

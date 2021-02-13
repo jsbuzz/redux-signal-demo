@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useActionListeners } from "redux-transitions";
+import { useActionListeners } from "redux-transitions/hooks";
 import { FETCH_DATA_FAILURE, FETCH_DATA_SUCCESS } from "../redux/actions";
 import { fetchData } from "../redux/thunks/fetchData";
+import { Code } from "./Code";
 
 const dataSelector = (store) => store.data.data;
 
@@ -23,7 +24,7 @@ export const DataFetcher = () => {
 
   return (
     <div className="data-fetcher">
-      <pre>
+      <Code>
         {`
         const data = useSelector(dataSelector) || fetchMessage;
         const [isLoading, setLoading] = useState(false);
@@ -38,7 +39,7 @@ export const DataFetcher = () => {
         );
         {(isFetching && "fetching...") || data}
       `}
-      </pre>
+      </Code>
       <button disabled={isFetching} onClick={() => dispatch(fetchData())}>
         Fetch
       </button>

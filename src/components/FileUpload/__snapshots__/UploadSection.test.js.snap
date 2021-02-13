@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UploadMutator Base transition state should match snapshot 1`] = `
+exports[`UploadSection Base transition state should match snapshot 1`] = `
 <Fragment>
   <button
     onClick={[Function]}
@@ -10,7 +10,7 @@ exports[`UploadMutator Base transition state should match snapshot 1`] = `
 </Fragment>
 `;
 
-exports[`UploadMutator Error transition state should match snapshot 1`] = `
+exports[`UploadSection Error transition state should match snapshot 1`] = `
 <Fragment>
   <button
     disabled={false}
@@ -27,7 +27,7 @@ exports[`UploadMutator Error transition state should match snapshot 1`] = `
 </Fragment>
 `;
 
-exports[`UploadMutator Pending transition state with \`uploadFile\` should match snapshot 1`] = `
+exports[`UploadSection Pending transition state with \`uploadFile\` should match snapshot 1`] = `
 <Fragment>
   <button
     disabled={true}
@@ -46,7 +46,7 @@ exports[`UploadMutator Pending transition state with \`uploadFile\` should match
 </Fragment>
 `;
 
-exports[`UploadMutator Pending transition state with Chunk should match snapshot 1`] = `
+exports[`UploadSection Pending transition state with Chunk should match snapshot 1`] = `
 <Fragment>
   <button
     disabled={true}

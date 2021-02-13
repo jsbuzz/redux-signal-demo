@@ -23,6 +23,14 @@ pre {
   overflow: auto;
   display: block;
   word-wrap: break-word;
+  cursor: n-resize;
+}
+
+pre.closed {
+  height: 30px;
+  overflow: hidden;
+  border-bottom: 1px dotted #d0d0d0;
+  cursor: s-resize;
 }
 
 button {

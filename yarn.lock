@@ -7954,12 +7954,9 @@ redux-thunk@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
 
-redux-transitions@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/redux-transitions/-/redux-transitions-0.5.1.tgz#eabf22f89366698b7d1ca8b50d3ea303077250dc"
-  dependencies:
-    react "^16.13.1"
-    react-redux "^7.2.1"
+redux-transitions@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/redux-transitions/-/redux-transitions-0.7.4.tgz#8a594045b0e11fbf67385c656f2b8015d93120c3"
 
 redux@^4.0.5:
   version "4.0.5"
